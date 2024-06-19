@@ -69,7 +69,7 @@ test.group('Identify API', (group) => {
         })
     });
 
-    test('create common contact for 2 primary, convert newer to secondary and modify linked contacts', async ({ client }) => {
+    test('create common contact for 2 primary, convert newer to secondary', async ({ client }) => {
         const response = await client.post('/identify').json({
             email: "ajay@gmail.com",
             phoneNumber: "8788612711",
@@ -89,7 +89,7 @@ test.group('Identify API', (group) => {
     // If common contact matches one primary and one secondary
     // no info on what to do in that case
     // Failing test case
-    test('create common contact for 2 primary, convert newer to secondary and modify linked contacts', async ({ client, assert }) => {
+    test('create common contact between one primary and one secondary', async ({ client, assert }) => {
         const response = await client.post('/identify').json({
             email: "ajay@gmail.com",
             phoneNumber: "123456789",
