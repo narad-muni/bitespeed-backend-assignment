@@ -6,11 +6,19 @@ export default class extends BaseSeeder {
     async run() {
         await Contact.createMany([
             {
+                id: 0,
+                phoneNumber: "91246867",
+                email: "cid@gmail.com",
+                linkedId: null,
+                linkPrecedence: "primary",
+                createdAt: DateTime.fromRFC2822("1 Jan 2024 11:00 Z"),
+            },
+            {
                 id: 1,
                 phoneNumber: "91246867",
                 email: "ajay@gmail.com",
-                linkedId: null,
-                linkPrecedence: "primary",
+                linkedId: 0,
+                linkPrecedence: "secondary",
                 createdAt: DateTime.fromRFC2822("1 Jan 2024 12:00 Z"),
             },
             {
