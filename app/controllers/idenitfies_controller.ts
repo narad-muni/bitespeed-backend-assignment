@@ -22,7 +22,10 @@ export default class IdenitfiesController {
             linkedId,
             primaryContacts,
             secondaryContacts,
-        ] = await ContactDao.getRelatedContacts(phoneNumber, email)
+        ] = await ContactDao.getRelatedContacts(
+            phoneNumber || existingContact?.phoneNumber || null,
+            email || existingContact?.email || null
+        )
 
         // Existing contact
         if(existingContact) {

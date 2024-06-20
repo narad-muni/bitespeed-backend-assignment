@@ -2,10 +2,18 @@ import Contact from "#models/contact";
 
 export default class ContactDao {
     public static async getExactContact(phoneNumber: string | null, email: string | null): Promise<Contact | null> {
-        const contact = await Contact.findBy({
-            phoneNumber,
-            email,
-        })
+
+        const whereClause: Record<string, string> = {};
+
+        // Check for null
+        if(phoneNumber){
+            whereClause['phoneNumber'] = phoneNumber;
+        }
+        if(email){
+            whereClause['email'] = email;
+        }
+
+        const contact = await Contact.findBy(whereClause)
 
         return contact
     }

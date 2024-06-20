@@ -37,6 +37,22 @@ test.group('Identify API', (group) => {
         })
     });
 
+    test('ignore already existing same contact with null value', async ({ client }) => {
+        const response = await client.post('/identify').json({
+            email: "saumillinux@gmail.com",
+            phoneNumber: null,
+        })
+
+        response.assertBody({
+            contact: {
+                "primaryContatctId": 2,
+                "emails": ["saumillinux@gmail.com", "saumil@gmail.com"],
+                "phoneNumbers": ["8788612711", "123456789"],
+                "secondaryContactIds": [3, 4]
+            }
+        })
+    });
+
     test('create secondary contact linked to primary contact', async ({ client }) => {
         const response = await client.post('/identify').json({
             email: "abhijeet@cid.com",
@@ -49,6 +65,22 @@ test.group('Identify API', (group) => {
                 "emails": ["saumillinux@gmail.com", "saumil@gmail.com", "abhijeet@cid.com"],
                 "phoneNumbers": ["8788612711", "123456789"],
                 "secondaryContactIds": [3, 4, 5]
+            }
+        })
+    });
+
+    test('create secondary contact with null value linked to primary contact', async ({ client }) => {
+        const response = await client.post('/identify').json({
+            email: null,
+            phoneNumber: "8788612711",
+        })
+
+        response.assertBody({
+            contact: {
+                "primaryContatctId": 2,
+                "emails": ["saumillinux@gmail.com", "saumil@gmail.com"],
+                "phoneNumbers": ["8788612711", "123456789"],
+                "secondaryContactIds": [3, 4]
             }
         })
     });

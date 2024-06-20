@@ -27,6 +27,23 @@ test.group('Contact dao', (group) => {
 
     })
 
+    test('getExactContact with null', async ({ assert }) => {
+        const existingContact = await ContactDao.getExactContact(null, "ajay@gmail.com");
+
+        assert.containsSubset(
+            existingContact?.serialize(),
+            {
+                id: 1,
+                phoneNumber: '91246867',
+                email: 'ajay@gmail.com',
+                linkedId: 0,
+                linkPrecedence: 'secondary',
+                createdAt: '2024-01-01T12:00:00.000+00:00',
+            }
+        )
+
+    })
+
     test('getMatchingContacts', async({ assert }) => {
         let noMatchingContacts = await ContactDao.getMatchingContacts([], []);
         assert.assert(noMatchingContacts.length == 0);
