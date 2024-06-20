@@ -13,7 +13,11 @@ export default class IdenitfiesController {
             phoneNumber
         } = payload;
 
+        // Get exact matching contact
         const existingContact = await ContactDao.getExactContact(phoneNumber, email)
+
+        // Get releated contact with direclt linked id
+        // Linked id will be oldest matching record
         const [
             linkedId,
             primaryContacts,

@@ -20,17 +20,20 @@ export default class ContactDao {
         return contacts
     }
     
-    // First value is directly linked contact
+    // First value is oldest linked contact id
     // Second array is all primary contacts
     // Third array is all secondary contacts
     public static async getRelatedContacts(phoneNumber: string | null, email: string | null): Promise<[number, Contact[], Contact[]]> {
         let linkedId: number|null = null;
         let fetchedContacts: Contact[] = [];
 
+        // Array of all emails and phone numbers found
         let phoneNumbers = [phoneNumber];
         let emails = [email];
 
+        // Loop till we find all records directly or indirectly
         while (true) {
+            // Get all directly matching contacts which contains obtained emails and phone numbers
             let contacts = await ContactDao.getMatchingContacts(
                 phoneNumbers,
                 emails,
