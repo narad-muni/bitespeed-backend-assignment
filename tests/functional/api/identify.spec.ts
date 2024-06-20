@@ -47,7 +47,7 @@ test.group('Identify API', (group) => {
             contact: {
                 "primaryContatctId": 2,
                 "emails": ["saumillinux@gmail.com", "saumil@gmail.com", "abhijeet@cid.com"],
-                "phoneNumbers": ["8788612711"],
+                "phoneNumbers": ["8788612711", "123456789"],
                 "secondaryContactIds": [3, 4, 5]
             }
         })
