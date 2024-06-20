@@ -143,4 +143,50 @@ test.group('Contact dao', (group) => {
             ]
         )
     })
+
+    test('getRelatedContacts 3 contacts using primary', async ({assert}) => {
+        let linkedId, primaryContacts, secondaryContacts;
+
+        [linkedId, primaryContacts, secondaryContacts] = await ContactDao.getRelatedContacts(
+            '8788612711',
+            'saumillinux@gmail.com',
+        )
+
+        assert.assert(linkedId == 2)
+        assert.assert(primaryContacts.length == 1)
+        assert.assert(secondaryContacts.length == 2)
+
+        assert.containsSubset(
+            primaryContacts.map(e => e.serialize()),
+            [
+                {
+                    id: 2,
+                    phoneNumber: '8788612711',
+                    email: 'saumillinux@gmail.com',
+                    linkedId: null,
+                    linkPrecedence: 'primary',
+                },
+            ]
+        )
+
+        assert.containsSubset(
+            secondaryContacts.map(e => e.serialize()),
+            [
+                {
+                    id: 3,
+                    phoneNumber: "8788612711",
+                    email: "saumil@gmail.com",
+                    linkedId: 2,
+                    linkPrecedence: "secondary",
+                },
+                {
+                    id: 4,
+                    phoneNumber: "123456789",
+                    email: "saumil@gmail.com",
+                    linkedId: 3,
+                    linkPrecedence: "secondary",
+                },
+            ]
+        )
+    })
 })

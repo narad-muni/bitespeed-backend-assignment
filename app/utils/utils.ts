@@ -6,11 +6,14 @@ export default async function createResponse(primaryContact: Contact, secondaryC
     const secondaryPhoneNumbers = secondaryContacts.map(e => e.phoneNumber);
     const secondaryContactIds = secondaryContacts.map(e => e.id);
 
+    const uniqueEmails = new Set([primaryContact.email, ...secondaryEmails]);
+    const uniquePhoneNumbers = new Set([primaryContact.phoneNumber, ...secondaryPhoneNumbers]);
+
     return {
         contact: {
             primaryContatctId: primaryContact.id,
-            emails: [primaryContact.email, ...secondaryEmails],
-            phoneNumbers: [primaryContact.phoneNumber, ...secondaryPhoneNumbers],
+            emails: Array.from(uniqueEmails),
+            phoneNumbers: Array.from(uniquePhoneNumbers),
             secondaryContactIds,
         }
     }

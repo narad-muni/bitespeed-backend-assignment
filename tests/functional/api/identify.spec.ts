@@ -45,7 +45,7 @@ test.group('Identify API', (group) => {
 
         response.assertBody({
             contact: {
-                "primaryContatctId": 1,
+                "primaryContatctId": 2,
                 "emails": ["saumillinux@gmail.com", "saumil@gmail.com", "abhijeet@cid.com"],
                 "phoneNumbers": ["8788612711"],
                 "secondaryContactIds": [3, 4, 5]
@@ -61,7 +61,7 @@ test.group('Identify API', (group) => {
 
         response.assertBody({
             contact: {
-                "primaryContatctId": 5,
+                "primaryContatctId": 2,
                 "emails": ["saumillinux@gmail.com", "saumil@gmail.com"],
                 "phoneNumbers": ["8788612711", "123456789", "912111111"],
                 "secondaryContactIds": [3, 4, 5]
@@ -71,26 +71,32 @@ test.group('Identify API', (group) => {
 
     test('create common contact for 2 primary, convert newer to secondary', async ({ client }) => {
         const response = await client.post('/identify').json({
-            email: "ajay@gmail.com",
+            email: "cid@gmail.com",
             phoneNumber: "8788612711",
         })
 
         response.assertBody({
             contact: {
-                "primaryContatctId": 1,
-                "emails": ["ajay@gmail.com", "saumillinux@gmail.com", "saumil@gmail.com"],
+                "primaryContatctId": 0,
+                "emails": ["cid@gmail.com", "ajay@gmail.com", "saumillinux@gmail.com", "saumil@gmail.com"],
                 "phoneNumbers": ["91246867", "8788612711", "123456789"],
-                "secondaryContactIds": [2, 3, 4]
+                "secondaryContactIds": [1, 2, 3, 4]
             }
         })
     });
 
     // Doubt
-    // If common contact matches one primary and one secondary
+    // If common contact matches one primary and one secondary with different primary
+    // Also 2 different secondary having 2 different primary contacts
     // no info on what to do in that case
     // Failing test case
     test('create common contact between one primary and one secondary', async ({ client, assert }) => {
-        const response = await client.post('/identify').json({
+        await client.post('/identify').json({
+            email: "cid@gmail.com",
+            phoneNumber: "123456789",
+        })
+        
+        await client.post('/identify').json({
             email: "ajay@gmail.com",
             phoneNumber: "123456789",
         })

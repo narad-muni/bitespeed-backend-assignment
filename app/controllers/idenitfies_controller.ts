@@ -13,16 +13,16 @@ export default class IdenitfiesController {
             phoneNumber
         } = payload;
 
-        const existingContact = await ContactDao.getExactContact(email, phoneNumber)
+        const existingContact = await ContactDao.getExactContact(phoneNumber, email)
         const [
             linkedId,
             primaryContacts,
             secondaryContacts,
-        ] = await ContactDao.getRelatedContacts(email, phoneNumber)
+        ] = await ContactDao.getRelatedContacts(phoneNumber, email)
 
         // Existing contact
         if(existingContact) {
-            
+            return createResponse(primaryContacts[0], secondaryContacts);
         }else if(primaryContacts.length == 0 && secondaryContacts.length == 0) {
             // New contact without any linked contacts
             const contact = await Contact.create({
