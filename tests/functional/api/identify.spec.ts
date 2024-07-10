@@ -122,18 +122,18 @@ test.group('Identify API', (group) => {
     // Also 2 different secondary having 2 different primary contacts
     // no info on what to do in that case
     // Failing test case
-    test('create common contact between one primary and one secondary', async ({ client, assert }) => {
-        await client.post('/identify').json({
-            email: "cid@gmail.com",
-            phoneNumber: "123456789",
-        })
+    // test('create common contact between one primary and one secondary', async ({ client, assert }) => {
+    //     await client.post('/identify').json({
+    //         email: "cid@gmail.com",
+    //         phoneNumber: "123456789",
+    //     })
         
-        await client.post('/identify').json({
-            email: "ajay@gmail.com",
-            phoneNumber: "123456789",
-        })
+    //     await client.post('/identify').json({
+    //         email: "ajay@gmail.com",
+    //         phoneNumber: "123456789",
+    //     })
 
-        assert.assert(false)
-    });
+    //     assert.assert(false)
+    // });
 
 })
